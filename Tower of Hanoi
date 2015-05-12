@@ -1,0 +1,110 @@
+public class TowerOfHanoi_Driver {
+
+ public static void main(String[] args) {
+  TowerOfHanoi twr = new TowerOfHanoi();
+  System.out.println("Program: Tower of Hanoi \n");
+  twr.enterNumDisks();
+  twr.runAgain();
+ }
+}
+
+import java.util.*;
+
+public class TowerOfHanoi {
+ int disks;
+
+ Stack<Integer>[] towers = new Stack[4];
+ Scanner keyboard = new Scanner(System.in);
+
+ public void enterNumDisks() { 
+  towers[1] = new Stack<Integer>();
+  towers[2] = new Stack<Integer>();
+  towers[3] = new Stack<Integer>();
+
+  System.out.println(" Enter the number of disks: ");
+  int value = keyboard.nextInt();
+  disks = value; 
+  pushFirstTower(value);
+ }
+
+ private void pushFirstTower(int n) {
+  for (int x = n; x > 0; x--) {
+   towers[1].push(x); 
+  }
+  displayTowers();
+  move(n, 1, 2, 3);
+ }
+
+ public void move(int n, int a, int b, int c) { 
+
+  if (n == 1) { 
+   System.out.println("(Inside)\nN: " + n + " A: " + a + " B: " + b  + " C: " + c); 
+   int temp = towers[a].pop(); 
+   towers[c].push(temp);
+   System.out.println("Move disk from " + a + " to " + c + "\n");
+   displayTowers();
+  }
+
+  else {
+   System.out.println("(First)\nN: " + n + " A: " + a + " B: " + b + " C: " + c);
+   move(n - 1, a, c, b); 
+   
+   int temp = towers[a].pop(); 
+   towers[c].push(temp); 
+   System.out.println("Move disk from " + a +  " to " + c + "\n");
+   System.out.println("(Middle)\nN: " + n + " A: " + a + " B: " + b + " C: " + c);
+   displayTowers();
+  
+   System.out.println("(Before Second)\nN: " + n + " A: " + a + " B: " + b + " C: " + c);
+   move(n - 1, b, a, c); 
+   System.out.println("(After Second)\nN: " + n + " A: " + a + " B: " + b + " C: " + c);
+  }
+ }
+
+ public void displayTowers() {
+  System.out.println("      Towers");
+  System.out.println("  A  |  B  |  C  ");
+  System.out.println("");
+  for (int i = disks - 1; i >= 0; i--) { 
+    String tower = new String(" "), of = new String(" "), hanoi = new String(" "); 
+   try {
+    tower = String.valueOf(towers[1].get(i)); 
+   }
+   catch (Exception valueNotFound) {  
+   }
+   try {
+    of = String.valueOf(towers[2].get(i)); 
+   }
+   catch (Exception valueNotFound) {
+   }
+   try {
+    hanoi = String.valueOf(towers[3].get(i)); 
+   }
+   catch (Exception valueNotFound) {
+   }
+   System.out.println("  " + tower + "     " + of + "     " + hanoi); 
+  }
+  System.out.println("\n");
+ }
+
+ public void runAgain() {
+  while (true) {
+   String choice;
+   System.out.println("Run again? Yes or No");
+   choice = keyboard.next();
+
+   if (choice.equalsIgnoreCase("yes")) {
+    enterNumDisks();
+   }
+
+   else if (choice.equalsIgnoreCase("no")) {
+    System.out.println("Exit");
+    return;
+   }
+
+   else {
+    System.out.println("Invalid input!");
+   }
+  }
+ }
+}
