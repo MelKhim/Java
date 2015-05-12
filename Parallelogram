@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class Parallelogram_Driver
+{
+  public static void main (String args [])
+  {
+    Scanner keyboard = new Scanner(System.in);
+    int width;
+    System.out.println("Enter the width of the Parallelogram:");
+    width = keyboard.nextInt();
+    
+    int height;
+    System.out.println("Enter the height of the parallelogram:");
+    height = keyboard.nextInt();
+    
+    Parallelogram recursionArea = new Parallelogram();
+    recursionArea.paraArea(width,height);
+  }
+}
+
+import java.util.Scanner;
+
+public class Parallelogram
+{
+  Scanner keyboard = new Scanner(System.in);
+  
+  void paraArea(int width, int height)
+  {
+    if (width < 0)
+    {
+      System.out.println("Done.  Width cannot go lower than 0!");
+      return;
+    }
+    if (height < 0)
+    {
+      System.out.println("Done. Height cannot go lower than 0!");
+      return;
+    }
+    int area = width * height;
+    System.out.println("The current width is " + width + ", and the area of the Parallelogram is " + area + ".");
+    width--;
+    paraArea(width,height);
+  }
+}
